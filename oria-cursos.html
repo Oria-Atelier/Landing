@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursos & Experiencias — Oria Atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F4F0E6;
+      --cream-dark: #EAE4D4;
+      --moss: #4A5C3A;
+      --moss-light: #6B7F55;
+      --moss-pale: #D4DBC8;
+      --charcoal: #2C2C28;
+      --warm-gray: #7A7568;
+      --gold: #C9A96E;
+      --gold-pale: #EDD9B0;
+      --silver-tone: #B8BEC4;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 3rem;
+      background: rgba(244, 240, 230, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(74, 92, 58, 0.1);
+      transition: padding 0.3s;
+    }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo img { display: block; height: 52px; width: auto; }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; align-items: center; }
+    .nav-links a { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--moss); }
+    .nav-cta { padding: 0.6rem 1.5rem; background: var(--moss); color: var(--cream); font-family: var(--font-body); font-size: 0.72rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; transition: background 0.3s; display: inline-block; }
+    .nav-cta:hover { background: var(--charcoal); }
+
+    /* ═══════════════════════════════════════
+       EXPERIENCIAS — HERO DINÁMICO
+    ═══════════════════════════════════════ */
+    .exp-hero {
+      height: calc(100vh - 74px);
+      min-height: 600px;
+      margin-top: 74px; /* empuja la sección completa debajo del nav fijo */
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    /* Panel izquierdo: imagen */
+    .exp-img-panel {
+      position: relative;
+      overflow: hidden;
+    }
+    .exp-img-panel img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute;
+      inset: 0;
+      transition: transform 8s ease;
+    }
+    .exp-hero:hover .exp-img-panel img { transform: scale(1.04); }
+    .exp-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--cream) 100%);
+      pointer-events: none;
+    }
+
+    /* Etiqueta flotante */
+    .exp-floating-tag {
+      position: absolute;
+      top: 2.5rem; left: 2.5rem;
+      background: var(--gold);
+      color: var(--cream);
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      font-family: var(--font-body);
+      font-weight: 400;
+      z-index: 10;
+    }
+
+    /* Panel derecho: texto */
+    .exp-text-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem 4.5rem 2rem 3rem;
+      position: relative;
+      background: var(--cream);
+      overflow-y: auto;
+    }
+    .exp-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.9rem;
+    }
+    .exp-eyebrow::before { content:''; display:block; width:2rem; height:1px; background:var(--gold); }
+    .exp-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4vw, 4.4rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--charcoal);
+      margin-bottom: 0.4rem;
+    }
+    .exp-title em { color: var(--moss); font-style: italic; }
+    .exp-subtitle {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--warm-gray);
+      margin-bottom: 1.4rem;
+    }
+    .exp-desc {
+      font-size: 0.9rem;
+      color: var(--warm-gray);
+      max-width: 400px;
+      line-height: 1.75;
+      margin-bottom: 1.6rem;
+    }
+
+    /* Chips de info */
+    .exp-chips { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 1.6rem; }
+    .exp-chip {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--charcoal);
+      border: 1px solid rgba(74,92,58,0.25);
+      padding: 0.4rem 1rem;
+      display: flex; align-items: center; gap: 0.45rem;
+    }
+  
+
+    /* Precio destacado */
+    .exp-precio {
+      display: flex; align-items: baseline; gap: 0.8rem;
+      margin-bottom: 1.6rem;
+    }
+    .exp-precio-num {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--moss);
+      line-height: 1;
+    }
+    .exp-precio-label { font-size: 0.75rem; color: var(--warm-gray); letter-spacing: 0.1em; }
+
+    .exp-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-moss {
+      padding: 0.85rem 2.2rem; background: var(--moss); color: var(--cream);
+      font-family: var(--font-body); font-size: 0.73rem; font-weight: 400;
+      letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+      border: none; cursor: pointer; transition: background 0.3s, transform 0.2s; display: inline-block;
+    }
+    .btn-moss:hover { background: var(--charcoal); transform: translateY(-1px); border: 0.3px solid rgba(245, 245, 245, 0.311) }
+    .btn-ghost {
+      padding: 0.85rem 2.2rem; background: transparent; color: var(--moss);
+      font-family: var(--font-body); font-size: 0.73rem; font-weight: 400;
+      letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+      border: 1px solid var(--moss); cursor: pointer; transition: all 0.3s; display: inline-block;
+    }
+    .btn-ghost:hover { background: var(--moss); color: var(--cream);transform: translateY(-1px) }
+
+
+    /* Indicador de navegación entre experiencias */
+    .exp-nav-dots {
+      display: flex; gap: 0.55rem; align-items: center;
+      margin-top: 2rem;
+    }
+    .exp-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--moss-pale); cursor: pointer;
+      transition: background 0.3s, width 0.3s; border: none; padding: 0;
+    }
+    .exp-dot.active { background: var(--moss); width: 20px; border-radius: 3px; }
+
+    /* Decoración: número grande */
+    .exp-deco-num {
+      position: absolute; bottom: -0.5rem; left: -0.8rem;
+      font-family: var(--font-display); font-size: 14rem;
+      font-weight: 300; color: rgba(74,92,58,0.05); line-height: 1;
+      user-select: none; pointer-events: none; letter-spacing: -0.05em;
+    }
+
+    /* ── Barra de próximas fechas
+    .fechas-bar {
+      background: var(--charcoal);
+      padding: 1rem 3rem;
+      display: flex; gap: 3rem; align-items: center; overflow-x: auto;
+    }
+    .fechas-bar-label {
+      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--moss-pale); white-space: nowrap; flex-shrink: 0;
+    }
+    .fechas-bar-items { display: flex; gap: 2.5rem; align-items: center; }
+    .fecha-item {
+      display: flex; gap: 0.8rem; align-items: center; white-space: nowrap;
+    }
+    .fecha-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+    .fecha-item-name { font-size: 0.78rem; color: var(--cream); font-family: var(--font-body); }
+    .fecha-item-date { font-size: 0.72rem; color: var(--warm-gray); }
+     ── */
+
+    /* ════════════════════════════════
+       SECCIÓN CATÁLOGO DE CURSOS
+    ════════════════════════════════ */
+    .cursos-section { padding: 7rem 4rem; background: var(--cream); }
+
+    .cursos-header { text-align: center; margin-bottom: 5rem; }
+    .cursos-header .section-label {
+      font-size: 0.68rem; letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--moss-light); margin-bottom: 0.8rem;
+    }
+    .cursos-header h2 {
+      font-family: var(--font-display); font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 300; color: var(--charcoal); line-height: 1.1;
+    }
+    .cursos-header h2 em { color: var(--moss); font-style: italic; }
+    .cursos-header p {
+      font-size: 0.92rem; color: var(--warm-gray); max-width: 520px;
+      margin: 1rem auto 0; line-height: 1.9;
+    }
+
+    /* Ruta de aprendizaje — rediseño premium */
+    .ruta-section {
+      margin-bottom: 5rem;
+      position: relative;
+    }
+    .ruta-section-label {
+      text-align: center;
+      font-size: 0.65rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--moss-light);
+      margin-bottom: 0.6rem;
+    }
+    .ruta-section-title {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 300;
+      color: var(--charcoal);
+      margin-bottom: 3.5rem;
+    }
+    .ruta-section-title em { color: var(--moss); font-style: italic; }
+
+    .ruta-timeline {
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 0;
+      padding: 0 2rem 1rem;
+    }
+    /* Línea horizontal de fondo */
+    .ruta-timeline::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 5%;
+      right: 5%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--moss-pale) 15%, var(--moss-pale) 85%, transparent);
+      pointer-events: none;
+    }
+
+    .ruta-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+      cursor: pointer;
+      gap: 0;
+    }
+
+    /* Conector entre nodos */
+    .ruta-connector {
+      display: flex;
+      align-items: center;
+      padding-top: 28px;
+      flex-shrink: 0;
+    }
+    .ruta-connector-line {
+      width: 24px;
+      height: 1px;
+      background: var(--moss-pale);
+    }
+    .ruta-connector-arrow {
+      font-size: 0.55rem;
+      color: var(--moss-pale);
+      line-height: 1;
+      margin-left: -2px;
+    }
+
+    .ruta-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1.5px solid var(--moss-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cream);
+      position: relative;
+      z-index: 2;
+      transition: all 0.35s;
+      box-shadow: 0 0 0 6px var(--cream);
+    }
+    .ruta-badge-num {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--warm-gray);
+      line-height: 1;
+      transition: color 0.35s;
+    }
+    .ruta-badge-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .ruta-node:hover .ruta-badge,
+    .ruta-node.active .ruta-badge {
+      background: var(--moss);
+      border-color: var(--moss);
+      box-shadow: 0 0 0 6px var(--cream), 0 4px 20px rgba(74,92,58,0.22);
+      transform: translateY(-3px);
+    }
+    .ruta-node:hover .ruta-badge-num,
+    .ruta-node.active .ruta-badge-num { color: var(--cream); }
+
+    /* Nodo especial gold (intensivo) */
+    .ruta-node.gold .ruta-badge { border-color: var(--gold-pale); }
+    .ruta-node.gold .ruta-badge-num { color: var(--gold); }
+    .ruta-node.gold:hover .ruta-badge,
+    .ruta-node.gold.active .ruta-badge { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 0 6px var(--cream), 0 4px 20px rgba(201,169,110,0.3); }
+
+    /* Nodo especial licencia */
+    .ruta-node.libre .ruta-badge { border-color: rgba(44,44,40,0.25); }
+    .ruta-node.libre .ruta-badge-num { color: var(--charcoal); }
+    .ruta-node.libre:hover .ruta-badge { background: var(--charcoal); border-color: var(--charcoal); box-shadow: 0 0 0 6px var(--cream), 0 4px 20px rgba(44,44,40,0.2); }
+    .ruta-node.libre:hover .ruta-badge-num { color: var(--cream); }
+
+    .ruta-node-info {
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .ruta-node-name {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      font-weight: 400;
+      transition: color 0.3s;
+      line-height: 1.3;
+    }
+    .ruta-node:hover .ruta-node-name,
+    .ruta-node.active .ruta-node-name { color: var(--moss); }
+    .ruta-node.gold:hover .ruta-node-name { color: var(--gold); }
+    .ruta-node.libre:hover .ruta-node-name { color: var(--charcoal); }
+
+    .ruta-node-tag {
+      display: inline-block;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--moss-pale);
+      border: 1px solid var(--moss-pale);
+      padding: 0.15rem 0.55rem;
+      margin-top: 0.35rem;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .ruta-node.gold .ruta-node-tag { color: var(--gold-pale); border-color: var(--gold-pale); }
+    .ruta-node.libre .ruta-node-tag { color: var(--silver-tone); border-color: rgba(184,190,196,0.4); }
+
+    /* Flecha decorativa entre paso 5 y 6 (bifurcación) */
+    .ruta-fork-label {
+      position: absolute;
+      top: -1.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    /* Grid de módulos */
+    .modulos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: rgba(74,92,58,0.1);
+      border: 1px solid rgba(74,92,58,0.1);
+      margin-bottom: 1px;
+    }
+
+    .modulo-card {
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      cursor: pointer;
+      transition: background 0.35s;
+    }
+    .modulo-card:hover { background: var(--charcoal); }
+
+    .modulo-img {
+      width: 100%; height: 200px;
+      object-fit: cover; display: block;
+      filter: grayscale(15%) brightness(0.97);
+      transition: filter 0.5s, transform 0.6s;
+    }
+    .modulo-card:hover .modulo-img { filter: grayscale(0%) brightness(1.05); transform: scale(1.03); }
+
+    .modulo-body { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
+
+    .modulo-num-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+    .modulo-num {
+      font-family: var(--font-display); font-size: 1rem; font-weight: 300;
+      color: var(--moss-pale); letter-spacing: 0.15em;
+      transition: color 0.3s;
+    }
+    .modulo-card:hover .modulo-num { color: rgba(212,219,200,0.5); }
+    .modulo-clases {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--warm-gray); background: var(--cream-dark);
+      padding: 0.25rem 0.7rem; border-radius: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+    .modulo-card:hover .modulo-clases { background: rgba(244,240,230,0.12); color: var(--moss-pale); }
+
+    .modulo-title {
+      font-family: var(--font-display); font-size: 1.5rem; font-weight: 400;
+      color: var(--moss); margin-bottom: 0.5rem;
+      transition: color 0.3s; line-height: 1.2;
+    }
+    .modulo-card:hover .modulo-title { color: var(--cream); }
+
+    .modulo-obj {
+      font-size: 0.84rem; color: var(--warm-gray); line-height: 1.75;
+      margin-bottom: 1.5rem; flex: 1;
+      transition: color 0.3s;
+    }
+    .modulo-card:hover .modulo-obj { color: rgba(244,240,230,0.6); }
+
+    /* Temario expandible */
+    .modulo-temario-toggle {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--moss); background: none; border: none; cursor: pointer;
+      padding: 0; font-family: var(--font-body); text-align: left;
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color 0.3s;
+    }
+    .modulo-card:hover .modulo-temario-toggle { color: var(--moss-pale); }
+    .toggle-arrow { transition: transform 0.3s; display: inline-block; font-style: normal; }
+    .modulo-temario-toggle.open .toggle-arrow { transform: rotate(90deg); }
+
+    .modulo-temario {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s;
+      opacity: 0;
+    }
+    .modulo-temario.open { max-height: 400px; opacity: 1; }
+    .modulo-temario ul {
+      list-style: none; margin-top: 1rem;
+      border-top: 1px solid rgba(74,92,58,0.12);
+      padding-top: 1rem;
+    }
+    .modulo-card:hover .modulo-temario ul { border-top-color: rgba(244,240,230,0.12); }
+    .modulo-temario li {
+      font-size: 0.8rem; color: var(--warm-gray);
+      padding: 0.25rem 0; display: flex; align-items: center; gap: 0.6rem;
+      transition: color 0.3s;
+    }
+    .modulo-card:hover .modulo-temario li { color: rgba(244,240,230,0.55); }
+    .modulo-temario li::before { content: '—'; color: var(--moss-pale); font-size: 0.7rem; flex-shrink: 0; }
+
+    /* Fila de meta info al fondo */
+    .modulo-meta {
+      display: flex; gap: 1.5rem; padding: 1rem 2rem;
+      border-top: 1px solid rgba(74,92,58,0.1);
+      background: rgba(74,92,58,0.03);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .modulo-card:hover .modulo-meta { background: rgba(244,240,230,0.05); border-top-color: rgba(244,240,230,0.1); }
+    .modulo-meta-item { display: flex; flex-direction: column; gap: 0.15rem; }
+    .modulo-meta-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--moss-light); transition: color 0.3s; }
+    .modulo-card:hover .modulo-meta-label { color: rgba(212,219,200,0.6); }
+    .modulo-meta-val { font-size: 0.82rem; color: var(--charcoal); font-family: var(--font-display); font-weight: 400; transition: color 0.3s; }
+    .modulo-card:hover .modulo-meta-val { color: var(--cream); }
+
+    /* Módulo especial: Intensivo (ocupa 2 columnas) */
+    .modulo-card.wide { grid-column: span 2; }
+    .modulo-card.wide .modulo-img { height: 260px; }
+
+    /* Licencia mensual — tarjeta oscura */
+    .modulo-card.licencia {
+      background: var(--charcoal);
+    }
+    .modulo-card.licencia .modulo-title { color: var(--cream); }
+    .modulo-card.licencia .modulo-num { color: rgba(212,219,200,0.3); }
+    .modulo-card.licencia .modulo-obj { color: rgba(244,240,230,0.55); }
+    .modulo-card.licencia .modulo-temario-toggle { color: var(--moss-pale); }
+    .modulo-card.licencia .modulo-temario ul { border-top-color: rgba(244,240,230,0.12); }
+    .modulo-card.licencia .modulo-temario li { color: rgba(244,240,230,0.5); }
+    .modulo-card.licencia .modulo-meta { background: rgba(244,240,230,0.04); border-top-color: rgba(244,240,230,0.1); }
+    .modulo-card.licencia .modulo-meta-label { color: rgba(212,219,200,0.5); }
+    .modulo-card.licencia .modulo-meta-val { color: var(--cream); }
+    .modulo-card.licencia .modulo-clases { background: rgba(244,240,230,0.1); color: var(--moss-pale); }
+    .modulo-card.licencia:hover { background: var(--moss); }
+
+    /* ════════════════════════
+       PLAN SILVER — PRECIOS
+    ════════════════════════ */
+    .precios-section {
+      background: var(--charcoal);
+      padding: 7rem 4rem;
+    }
+    .precios-header { text-align: center; margin-bottom: 4rem; }
+    .precios-header .section-label { font-size: 0.68rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--moss-pale); margin-bottom: 0.8rem; }
+    .precios-header h2 { font-family: var(--font-display); font-size: clamp(2.2rem, 3.5vw, 3.8rem); font-weight: 300; color: var(--cream); }
+    .precios-header h2 em { color: var(--gold); font-style: italic; }
+    .precios-header p { font-size: 0.9rem; color: rgba(244,240,230,0.55); max-width: 440px; margin: 1rem auto 0; line-height: 1.9; }
+
+    .precios-table {
+      max-width: 860px; margin: 0 auto;
+      border: 1px solid rgba(244,240,230,0.08);
+    }
+    .precio-row {
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 1fr;
+      border-bottom: 1px solid rgba(244,240,230,0.08);
+      transition: background 0.25s;
+    }
+    .precio-row:last-child { border-bottom: none; }
+    .precio-row.header-row {
+      background: rgba(74,92,58,0.25);
+    }
+    .precio-cell {
+      padding: 1.2rem 1.8rem;
+      font-size: 0.88rem; color: rgba(244,240,230,0.7);
+      display: flex; align-items: center;
+      border-right: 1px solid rgba(244,240,230,0.06);
+    }
+    .precio-cell:last-child { border-right: none; }
+    /* La celda de precio apila número y subtexto en columna */
+    .precio-cell:has(.precio-num-cell) {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .header-row .precio-cell {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--moss-pale); font-weight: 400;
+    }
+    .precio-cell.nombre { color: var(--cream); }
+    .precio-num-cell {
+      font-family: var(--font-display); font-size: 1.3rem; font-weight: 300;
+      color: var(--gold) !important; line-height: 1.2;
+    }
+    .precio-sub { font-size: 0.68rem; color: rgba(244,240,230,0.4); margin-top: 0.15rem; }
+
+    /* En desktop el wrapper es invisible al grid — las celdas participan directamente */
+    .precio-row-details { display: contents; }
+
+    .precios-footer {
+      max-width: 860px; margin: 2rem auto 0;
+      padding: 1.5rem 1.8rem;
+      border: 1px solid rgba(74,92,58,0.25);
+    }
+    .precios-footer-title { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--moss-pale); margin-bottom: 1rem; }
+    .precios-footer-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .precios-footer-item { font-size: 0.82rem; color: rgba(244,240,230,0.55); display: flex; gap: 0.7rem; align-items: flex-start; }
+    .precios-footer-item::before { content: '·'; color: var(--moss-light); flex-shrink: 0; margin-top: 0.05rem; }
+
+    .precios-cta { text-align: center; margin-top: 3rem; }
+
+    /* Hover y color intensivo — solo en desktop */
+    @media (min-width: 961px) {
+      .precio-row:not(.header-row):hover { background: rgba(74,92,58,0.12); }
+      .intensivo-precio { color: var(--gold) !important; }
+    }
+
+    /* ═══════════════════
+       EXPERIENCIAS TABS
+       (botones en hero)
+    ═══════════════════ */
+    .exp-tabs {
+      display: flex;
+      z-index: 10;
+    }
+    /* Desktop: posición absolute al fondo del panel imagen */
+    .exp-tabs--desktop {
+      position: absolute; bottom: 0; left: 0;
+    }
+    /* Mobile: oculto por defecto, se muestra en breakpoint */
+    .exp-tabs--mobile {
+      display: none;
+    }
+    .exp-tab {
+      padding: 0.9rem 1.6rem;
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      background: rgba(244,240,230,0.85); color: var(--warm-gray);
+      border: none; cursor: pointer; font-family: var(--font-body);
+      border-right: 1px solid rgba(74,92,58,0.12);
+      transition: all 0.3s; backdrop-filter: blur(4px);
+    }
+    .exp-tab:last-child { border-right: none; }
+    .exp-tab.active { background: var(--moss); color: var(--cream); }
+    .exp-tab:hover:not(.active) { background: var(--cream); color: var(--moss); }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--charcoal);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      border-top: 1px solid rgba(244,240,230,0.07);
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--cream);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+    }
+    .footer-brand small {
+      display: block;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--warm-gray);
+      margin-top: 2px;
+      text-transform: uppercase;
+      font-family: var(--font-body);
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--moss-pale); }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: rgba(244,240,230,0.25);
+    }
+
+    /* ── Hamburger ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 300;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--moss);
+      transition: transform 0.35s, opacity 0.25s;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile menu overlay */
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(244,240,230,0.98);
+      backdrop-filter: blur(12px);
+      z-index: 250;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s;
+    }
+    .nav-mobile-menu.open {
+      display: flex;
+      opacity: 1;
+      pointer-events: all;
+    }
+    .nav-mobile-menu a {
+      font-size: 1.4rem;
+      font-family: var(--font-display);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--charcoal);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-mobile-menu a:hover, .nav-mobile-menu a.active { color: var(--moss); }
+    .nav-mobile-menu .menu-close {
+      position: absolute;
+      top: 1.5rem; right: 1.8rem;
+      background: none; border: none; cursor: pointer;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--warm-gray);
+      transition: color 0.3s;
+    }
+    .nav-mobile-menu .menu-close:hover { color: var(--moss); }
+    .nav-mobile-menu .menu-close::before,
+    .nav-mobile-menu .menu-close::after {
+      content: '';
+      position: absolute;
+      width: 20px; height: 1.5px;
+      background: currentColor;
+    }
+    .nav-mobile-menu .menu-close::before { transform: rotate(45deg); }
+    .nav-mobile-menu .menu-close::after  { transform: rotate(-45deg); }
+
+    .nav-mobile-menu .nav-cta-mobile {
+      margin-top: 1rem;
+      padding: 0.8rem 2.5rem;
+      background: var(--moss);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    /* ── RESPONSIVE ── */
+
+    /* Pantallas bajas (laptops cortas, landscape móvil) */
+    @media (max-height: 850px) {
+      .exp-text-panel {
+        justify-content: flex-start;
+        padding-top: 4rem;
+      }
+      .exp-title {
+        font-size: clamp(2.2rem, 4vw, 4rem);
+        line-height: 1;
+      }
+      .exp-subtitle { margin-bottom: 1rem; }
+      .exp-desc { margin-bottom: 1.5rem; }
+      .exp-chips { margin-bottom: 1.5rem; }
+      .exp-precio { margin-bottom: 1.5rem; }
+    }
+
+    @media (max-width: 960px) {
+      /* Hero: apila imagen arriba, tabs al medio, texto abajo */
+      .exp-hero {
+        height: auto;
+        max-height: none;
+        margin-top: 72px;
+        grid-template-columns: 1fr;
+        padding-top: 0;
+      }
+      .exp-img-panel {
+        height: 55vw;
+        min-height: 220px;
+        max-height: 340px;
+      }
+      .exp-img-overlay {
+        background: linear-gradient(to bottom, transparent 50%, var(--cream) 100%);
+      }
+      /* Etiqueta: baja para no quedar bajo el nav */
+      .exp-floating-tag {
+        top: 1rem;
+        left: 1rem;
+        font-size: 0.6rem;
+        padding: 0.35rem 0.8rem;
+      }
+      /* Panel de texto — más espacio arriba que en v3 */
+      .exp-text-panel {
+        padding: 3rem 1.8rem 3rem;
+        justify-content: flex-start;
+      }
+      /* Título más compacto */
+      .exp-title { font-size: clamp(2rem, 8vw, 3.2rem); }
+      /* Tabs: ocultar el de dentro de la imagen, mostrar el externo */
+      .exp-tabs--desktop { display: none; }
+      .exp-tabs--mobile {
+        display: flex;
+        flex-wrap: wrap;
+        grid-column: 1 / -1;
+        border-top: 1px solid rgba(74,92,58,0.12);
+        background: var(--cream);
+        order: 2;
+      }
+      .exp-tab {
+        flex: 1 1 auto;
+        text-align: center;
+        padding: 0.75rem 0.8rem;
+        font-size: 0.62rem;
+      }
+      /* Chips más pequeños */
+      .exp-chip { font-size: 0.68rem; padding: 0.35rem 0.7rem; }
+      /* Descripción */
+      .exp-desc { font-size: 0.88rem; margin-bottom: 1.8rem; }
+      /* Precio */
+      .exp-precio { margin-bottom: 1.5rem; }
+      /* Botones en columna */
+      .exp-ctas { flex-direction: column; gap: 0.7rem; }
+      .btn-moss, .btn-ghost { text-align: center; }
+
+      /* Resto de secciones — mantiene 2 columnas en tablet */
+      .cursos-section { padding: 5rem 1.5rem; }
+      .modulos-grid { grid-template-columns: 1fr 1fr; }
+      .precios-section { padding: 5rem 1.5rem; }
+      /* Tabla de precios → tarjetas legibles */
+      .precios-table { border: none; max-width: 100%; }
+      .precio-row.header-row { display: none; }
+      .precio-row {
+        display: block;
+        border: 1px solid rgba(244,240,230,0.1);
+        border-bottom: none;
+        overflow: hidden;
+      }
+      .precio-row:last-child { border-bottom: 1px solid rgba(244,240,230,0.1); }
+      /* Hover mobile: solo agranda el nombre, sin cambio de color */
+      .precio-row:not(.header-row) .precio-cell.nombre {
+        transition: font-size 0.25s ease;
+      }
+      .precio-row:not(.header-row):hover .precio-cell.nombre { font-size: 1.02rem; }
+      .precio-cell {
+        border-right: none;
+        border-bottom: none;
+        padding: 0;
+        font-size: 0.88rem;
+        display: block;
+      }
+      /* Etiqueta de categoría como bloque separado */
+      .precio-cell[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.58rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--moss-pale);
+        margin-bottom: 0.4rem;
+      }
+      /* Nombre del curso: encabezado con fondo */
+      .precio-cell.nombre {
+        grid-column: unset;
+        background: rgba(74,92,58,0.18);
+        border-bottom: 1px solid rgba(244,240,230,0.07);
+        padding: 0.9rem 1.4rem 1rem;
+        font-size: 0.92rem;
+        letter-spacing: 0.02em;
+      }
+      /* Fila inferior: duración + precio lado a lado */
+      .precio-row-details {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+      }
+      /* Padding correcto apuntando a hijos de precio-row-details */
+      .precio-row-details .precio-cell:first-child {
+        border-right: 1px solid rgba(244,240,230,0.07);
+        padding: 1rem 1.4rem;
+      }
+      .precio-row-details .precio-cell:last-child {
+        padding: 1rem 1.4rem;
+      }
+      .precio-num-cell { font-size: 1.5rem; }
+      .fechas-bar { padding: 1rem 1.5rem; gap: 1.5rem; }
+      /* Footer apilado */
+      .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem 1.5rem;
+        gap: 1.5rem;
+      }
+      .footer-links { flex-direction: column; gap: 0.8rem; }
+      .footer-copy { border-top: 1px solid rgba(244,240,230,0.07); padding-top: 1.5rem; width: 100%; }
+    }
+
+    @media (max-width: 950px) {
+      nav { padding: 0.8rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
+    }
+
+    @media (max-width: 600px) {
+      .exp-img-panel { height: 65vw; max-height: 280px; }
+      .exp-chips { gap: 0.5rem; }
+      .exp-chip { font-size: 0.65rem; padding: 0.3rem 0.6rem; }
+      /* Título aún más pequeño y compacto en móvil */
+      .exp-title {
+        font-size: clamp(1.9rem, 9vw, 2.8rem);
+        line-height: 1;
+      }
+      .exp-eyebrow { margin-top: 0.5rem; }
+      .exp-text-panel { padding-top: 3rem; }
+      /* Botones CTA apilados verticalmente */
+      .precios-cta-btns {
+        flex-direction: column !important;
+        max-width: 100% !important;
+      }
+      .precios-cta-btns .btn-moss,
+      .precios-cta-btns .btn-ghost {
+        min-width: unset !important;
+        width: 100%;
+      }
+      /* Grid a 1 columna en móvil */
+      .modulos-grid { grid-template-columns: 1fr; }
+      .modulo-card.wide { grid-column: span 1; }
+      .ruta-timeline { flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+      .ruta-timeline::before { display: none; }
+      .ruta-connector { display: none; }
+      .ruta-node { flex: 0 0 auto; width: 70px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="nav-logo" href="index.html" aria-label="Oria Atelier">
+      <img src="img/ORIAmusgo .png"  width="auto" alt="">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="index.html#nosotros">Nosotros</a></li>
+      <li><a href="#" class="active">Cursos</a></li>
+      <li><a href="index.html#galeria">Galería</a></li>
+      <li><a href="index.html#ubicacion">Visítanos</a></li>
+    </ul>
+    <a class="nav-cta" href="https://wa.me/4423307074">Reservar lugar</a>
+  </nav>
+
+  <!-- Mobile menu overlay -->
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <button class="menu-close" onclick="toggleMenu()" aria-label="Cerrar menú"></button>
+    <a href="index.html" onclick="toggleMenu()">Inicio</a>
+    <a href="index.html#nosotros" onclick="toggleMenu()">Nosotros</a>
+    <a href="#" class="active" onclick="toggleMenu()">Cursos</a>
+    <a href="index.html#galeria" onclick="toggleMenu()">Galería</a>
+    <a href="index.html#ubicacion" onclick="toggleMenu()">Visítanos</a>
+    <a class="nav-cta-mobile" href="https://wa.me/4423307074" onclick="toggleMenu()">Reservar lugar</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       EXPERIENCIAS
+  ═══════════════════════════════════════ -->
+  <section class="exp-hero" id="experiencia">
+
+    <!-- Panel imagen -->
+    <div class="exp-img-panel">
+      <span class="exp-floating-tag" id="exp-tag"> Workshop de Cera</span>
+      <img
+        id="exp-main-img"
+        src="imgs/w2.jpg"
+        alt="Workshop de Cera — Oria Atelier"
+        loading="eager"
+      />
+      <div class="exp-img-overlay"></div>
+
+      <!-- Tabs de experiencias (desktop: absolute al fondo de la imagen) -->
+      <div class="exp-tabs exp-tabs--desktop">
+        <button class="exp-tab active" onclick="setExp(0)">Workshop de Cera</button>
+        <button class="exp-tab" onclick="setExp(1)">Taller de Novios</button>
+        <button class="exp-tab" onclick="setExp(2)">Colaboraciones</button>
+      </div>
+    </div>
+
+    <!-- Tabs de experiencias (mobile: fuera del panel de imagen, visible) -->
+    <div class="exp-tabs exp-tabs--mobile">
+      <button class="exp-tab active" onclick="setExp(0)">Workshop de Cera</button>
+      <button class="exp-tab" onclick="setExp(1)">Taller de Novios</button>
+      <button class="exp-tab" onclick="setExp(2)">Colaboraciones</button>
+    </div>
+
+    <!-- Panel texto -->
+    <div class="exp-text-panel">
+      <div class="exp-deco-num" id="exp-deco">01</div>
+
+      <div class="exp-eyebrow" id="exp-eyebrow">Experiencia entre amigos · Bajo Agenda</div>
+      <h1 class="exp-title" id="exp-title">Workshop<br /><em>de Cera</em></h1>
+      <div class="exp-subtitle" id="exp-subtitle">Crea el regalo más especial: una joya hecha por ti</div>
+      <p class="exp-desc" id="exp-desc">
+        Un momento creativo y único para vivir con esa persona especial. Esculpirán juntos un dije o un anillo en plata en una sesión de 4 horas. Se incluyen 8gr de plata, snacks y fotografías del proceso.
+      </p>
+
+      <div class="exp-chips" id="exp-chips">
+        <div class="exp-chip">1 sesión de 4 hrs</div>
+        <div class="exp-chip"> Individual o en pareja</div>
+        <div class="exp-chip"> Materiales incluidos</div>
+        <div class="exp-chip">✦ Plata .950</div>
+      </div>
+
+      <div class="exp-precio">
+        <div class="exp-precio-num" id="exp-price">$1,990</div>
+        <div class="exp-precio-label">MXN por persona<br /> $3,850 por pareja</div>
+      </div>
+
+      <div class="exp-ctas">
+        <a class="btn-moss" href="https://wa.me/4423307074" target="_blank">Reservar mi lugar</a>
+        <a class="btn-ghost" href="#cursos">Ver catálogo de cursos</a>
+      </div>
+
+      <div class="exp-nav-dots">
+        <button class="exp-dot active" onclick="setExp(0)"></button>
+        <button class="exp-dot" onclick="setExp(1)"></button>
+        <button class="exp-dot" onclick="setExp(2)"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BARRA DE PRÓXIMAS FECHAS 
+  <div class="fechas-bar">
+    <div class="fechas-bar-label">Próximas fechas</div>
+    <div class="fechas-bar-items">
+      <div class="fecha-item">
+        <div class="fecha-dot"></div>
+        <span class="fecha-item-name">Esculpe en cera</span>
+        <span class="fecha-item-date">Vie · 16:00 hrs</span>
+      </div>
+      <div class="fecha-item">
+        <div class="fecha-dot"></div>
+        <span class="fecha-item-name">Módulo 2 · Cera</span>
+        <span class="fecha-item-date">Lun · 10:00 hrs</span>
+      </div>
+      <div class="fecha-item">
+        <div class="fecha-dot"></div>
+        <span class="fecha-item-name">Curso de Verano</span>
+        <span class="fecha-item-date">Sáb · 11:00 hrs</span>
+      </div>
+      <div class="fecha-item">
+        <div class="fecha-dot"></div>
+        <span class="fecha-item-name">Metal Forjado</span>
+        <span class="fecha-item-date">Lun · 10:00 hrs</span>
+      </div>
+      <div class="fecha-item">
+        <div class="fecha-dot"></div>
+        <span class="fecha-item-name">Módulo 4 · Montado</span>
+        <span class="fecha-item-date">Mié · 16:00 hrs</span>
+      </div>
+    </div>
+  </div>
+  -->
+
+  <!-- ════════════════════════════════
+       CATÁLOGO DE MÓDULOS
+  ════════════════════════════════ -->
+  <section class="cursos-section" id="cursos">
+    <div class="cursos-header reveal">
+      <div class="section-label">Escuela de Joyería Oria</div>
+      <h2>Elige tu <em>camino</em></h2>
+      <p>Desde tu primera clase hasta dominar las técnicas de alta joyería. Cada módulo es un escalón en el oficio — a tu ritmo, con materiales incluidos.</p>
+    </div>
+
+    <!-- Ruta visual rediseñada -->
+    <div class="ruta-section reveal" style="transition-delay:0.15s;">
+      <div class="ruta-section-label">Tu camino en la joyería</div>
+      <div class="ruta-section-title">Ruta de <em>aprendizaje</em></div>
+
+      <div class="ruta-timeline">
+
+        <!-- Módulo 1 -->
+        <div class="ruta-node active">
+          <div class="ruta-badge"><span class="ruta-badge-num">1</span></div>
+          <div class="ruta-node-info">
+            <div class="ruta-node-name">Intro</div>
+            <div class="ruta-node-tag">1 clase</div>
+          </div>
+        </div>
+
+        <div class="ruta-connector">
+          <div class="ruta-connector-line"></div>
+          <div class="ruta-connector-arrow">▶</div>
+        </div>
+
+        <!-- Módulo 2 -->
+        <div class="ruta-node">
+          <div class="ruta-badge"><span class="ruta-badge-num">2</span></div>
+          <div class="ruta-node-info">
+            <div class="ruta-node-name">Cera</div>
+            <div class="ruta-node-tag">6 clases</div>
+          </div>
+        </div>
+
+        <div class="ruta-connector">
+          <div class="ruta-connector-line"></div>
+          <div class="ruta-connector-arrow">▶</div>
+        </div>
+
+        <!-- Módulo 3 -->
+        <div class="ruta-node">
+          <div class="ruta-badge"><span class="ruta-badge-num">3</span></div>
+          <div class="ruta-node-info">
+            <div class="ruta-node-name">Metal</div>
+            <div class="ruta-node-tag">8 clases</div>
+          </div>
+        </div>
+
+        <div class="ruta-connector">
+          <div class="ruta-connector-line"></div>
+          <div class="ruta-connector-arrow">▶</div>
+        </div>
+
+        <!-- Módulo 4 -->
+        <div class="ruta-node">
+          <div class="ruta-badge"><span class="ruta-badge-num">4</span></div>
+          <div class="ruta-node-info">
+            <div class="ruta-node-name">Montado</div>
+            <div class="ruta-node-tag">8 clases</div>
+          </div>
+        </div>
+
+        <div class="ruta-connector">
+          <div class="ruta-connector-line"></div>
+          <div class="ruta-connector-arrow">▶</div>
+        </div>
+
+        <!-- Módulo 5 -->
+        <div class="ruta-node">
+          <div class="ruta-badge"><span class="ruta-badge-num">5</span></div>
+          <div class="ruta-node-info">
+            <div class="ruta-node-name">Avanzado</div>
+            <div class="ruta-node-tag">8 clases</div>
+          </div>
+        </div>
+
+        <!-- Conector doble hacia intensivo y licencia -->
+        <div class="ruta-connector" style="position:relative;">
+          <div class="ruta-connector-line" style="background:var(--gold-pale);width:32px;"></div>
+          <div class="ruta-connector-arrow" style="color:var(--gold-pale);">▶</div>
+          <span class="ruta-fork-label">vía rápida</span>
+        </div>
+
+        <!-- Módulo 6 Intensivo -->
+        <div class="ruta-node gold">
+          <div class="ruta-badge"><span class="ruta-badge-num">⚡</span></div>
+          <div class="ruta-node-info">
+            <div class="ruta-node-name">Intensivo</div>
+            <div class="ruta-node-tag">12 clases</div>
+          </div>
+        </div>
+
+        <div class="ruta-connector">
+          <div class="ruta-connector-line" style="background:rgba(44,44,40,0.2);"></div>
+          <div class="ruta-connector-arrow" style="color:rgba(44,44,40,0.3);">▶</div>
+        </div>
+
+        <!-- Licencia Mensual -->
+        <div class="ruta-node libre">
+          <div class="ruta-badge"><span class="ruta-badge-num">∞</span></div>
+          <div class="ruta-node-info">
+            <div class="ruta-node-name">Licencia</div>
+            <div class="ruta-node-tag">Taller libre</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Grid de módulos -->
+    <div class="modulos-grid reveal" style="transition-delay:0.2s;">
+
+      <!-- MÓDULO 1: INTRODUCCIÓN -->
+      <div class="modulo-card wide">
+        <img class="modulo-img"
+          src="imgs/intro1.jpeg"
+          alt="Introducción a la joyería — boceto y diseño" loading="lazy" />
+        <div class="modulo-body">
+          <div class="modulo-num-row">
+            <span class="modulo-num">Módulo 01</span>
+            <span class="modulo-clases">1 clase</span>
+          </div>
+          <div class="modulo-title">Introducción a la Joyería</div>
+          <p class="modulo-obj">Formación integral introductoria: principios básicos del oficio, materiales, herramientas, diseño y boceto de piezas. El punto de partida de todo.</p>
+          <button class="modulo-temario-toggle" onclick="toggleTemario(this)">
+            <span class="toggle-arrow">›</span> Ver temario
+          </button>
+          <div class="modulo-temario">
+            <ul>
+              <li>Seguridad en el taller</li>
+              <li>Máquinas y herramientas</li>
+              <li>Metales y aleaciones</li>
+              <li>Piedras preciosas / Diamantes</li>
+              <li>Diseño y boceto de piezas</li>
+              <li>Proceso creativo</li>
+              <li>Técnicas de joyería</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modulo-meta">
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Duración clase</span>
+            <span class="modulo-meta-val">3 hrs</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Material</span>
+            <span class="modulo-meta-val">Lápiz y papel</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Prerequisito</span>
+            <span class="modulo-meta-val">Ninguno</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 2: CERA -->
+      <div class="modulo-card">
+        <img class="modulo-img"
+          src="imgs/w8.png.webp"
+          alt="Módulo de cera — escultura y fundición" loading="lazy" />
+        <div class="modulo-body">
+          <div class="modulo-num-row">
+            <span class="modulo-num">Módulo 02</span>
+            <span class="modulo-clases">6 clases · 4 hrs c/u</span>
+          </div>
+          <div class="modulo-title">Cera</div>
+          <p class="modulo-obj">Aprende a manejar la cera como material base: modelado a mano, escultura con cera suave y dura, vaciado en tierra, cera perdida y acabados.</p>
+          <button class="modulo-temario-toggle" onclick="toggleTemario(this)">
+            <span class="toggle-arrow">›</span> Ver temario
+          </button>
+          <div class="modulo-temario">
+            <ul>
+              <li>Diseño y boceto de pieza</li>
+              <li>Cera Rosa moldeado a mano</li>
+              <li>Escultura: cera suave y cera dura</li>
+              <li>Anillo de cera dura</li>
+              <li>Vaciado en tierra</li>
+              <li>Cera perdida</li>
+              <li>Limado y lijado</li>
+              <li>Acabados</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modulo-meta">
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Duración</span>
+            <span class="modulo-meta-val">7 semanas</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Prerequisito</span>
+            <span class="modulo-meta-val">Módulo 1</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 3: METAL FORJADO -->
+      <div class="modulo-card">
+        <img class="modulo-img"
+          src="imgs/e5.jpg"
+          alt="Metal forjado a mano — soldadura y texturas" loading="lazy" />
+        <div class="modulo-body">
+          <div class="modulo-num-row">
+            <span class="modulo-num">Módulo 03</span>
+            <span class="modulo-clases">8 clases · 4 hrs c/u</span>
+          </div>
+          <div class="modulo-title">Metal Forjado a Mano</div>
+          <p class="modulo-obj">Domina las técnicas básicas sobre metales preciosos: calado, embutido, texturas, trenzado y soldadura. Precisión y fabricación desde metal puro.</p>
+          <button class="modulo-temario-toggle" onclick="toggleTemario(this)">
+            <span class="toggle-arrow">›</span> Ver temario
+          </button>
+          <div class="modulo-temario">
+            <ul>
+              <li>Material para dije</li>
+              <li>Dije calado</li>
+              <li>Embutido</li>
+              <li>Texturas</li>
+              <li>Trenzado</li>
+              <li>Soldadura</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modulo-meta">
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Plata incluida</span>
+            <span class="modulo-meta-val">8 gr</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Duración</span>
+            <span class="modulo-meta-val">9 semanas</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Prerequisito</span>
+            <span class="modulo-meta-val">Módulo 2</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 4: MONTADO BÁSICO -->
+      <div class="modulo-card">
+        <img class="modulo-img"
+          src="imgs/e6.jpg"
+          alt="Montado básico — bisel y canastas" loading="lazy" />
+        <div class="modulo-body">
+          <div class="modulo-num-row">
+            <span class="modulo-num">Módulo 04</span>
+            <span class="modulo-clases">8 clases · 4 hrs c/u</span>
+          </div>
+          <div class="modulo-title">Montado Básico</div>
+          <p class="modulo-obj">Introducción a montados: bisel simple y en argolla, cálculo de canastas para distintos estilos, tipos y formas de piedras y gemas.</p>
+          <button class="modulo-temario-toggle" onclick="toggleTemario(this)">
+            <span class="toggle-arrow">›</span> Ver temario
+          </button>
+          <div class="modulo-temario">
+            <ul>
+              <li>Bisel</li>
+              <li>Bisel en argolla</li>
+              <li>Canasta 1 — aretes</li>
+              <li>Canasta 2 — dije</li>
+              <li>Canasta doble 1</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modulo-meta">
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Plata incluida</span>
+            <span class="modulo-meta-val">10–15 gr</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Duración</span>
+            <span class="modulo-meta-val">9 semanas</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Prerequisito</span>
+            <span class="modulo-meta-val">Módulo 3</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 5: MONTADO AVANZADO -->
+      <div class="modulo-card">
+        <img class="modulo-img"
+          src="imgs/mont1.jpeg"
+          alt="Montado avanzado — pavé y solitario" loading="lazy" />
+        <div class="modulo-body">
+          <div class="modulo-num-row">
+            <span class="modulo-num">Módulo 05</span>
+            <span class="modulo-clases">8 clases · 4 hrs c/u</span>
+          </div>
+          <div class="modulo-title">Montado Avanzado</div>
+          <p class="modulo-obj">Técnicas avanzadas de montado: pavé churumbela, micropavé en dije, solitario y montado a nivel argolla externo e interno.</p>
+          <button class="modulo-temario-toggle" onclick="toggleTemario(this)">
+            <span class="toggle-arrow">›</span> Ver temario
+          </button>
+          <div class="modulo-temario">
+            <ul>
+              <li>Montado a nivel argolla externo e interno</li>
+              <li>Pavé churumbela</li>
+              <li>Micropavé dije</li>
+              <li>Solitario</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modulo-meta">
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Circonias incl.</span>
+            <span class="modulo-meta-val">2 / 2.5 / 1.5 mm</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Duración</span>
+            <span class="modulo-meta-val">9 semanas</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Prerequisito</span>
+            <span class="modulo-meta-val">Módulo 4</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 6: GENERAL INTENSIVO (2 columnas) -->
+      <div class="modulo-card wide">
+        <img class="modulo-img"
+          src="imgs/g1.jpg"
+          alt="Curso General Intensivo de Joyería" loading="lazy" />
+        <div class="modulo-body">
+          <div class="modulo-num-row">
+            <span class="modulo-num" style="color:var(--gold);">Módulo 06 · Especial</span>
+            <span class="modulo-clases" style="background:rgba(201,169,110,0.15);color:var(--gold);">12 clases · 4 hrs c/u</span>
+          </div>
+          <div class="modulo-title intensivo-title">General Intensivo</div>
+          <p class="modulo-obj" style="max-width:560px;">El camino completo en un solo programa: desde cera y boceto hasta metal, bisel, alambre, soldadura y pulido. Ideal si quieres avanzar rápido y con profundidad. Duración de 13 semanas.</p>
+          <button class="modulo-temario-toggle" onclick="toggleTemario(this)">
+            <span class="toggle-arrow">›</span> Ver temario completo
+          </button>
+          <div class="modulo-temario">
+            <ul style="columns:2; gap:2rem;">
+              <li>Diseño y boceto de pieza</li>
+              <li>Cera Rosa a mano</li>
+              <li>Cera dura</li>
+              <li>Vaciado</li>
+              <li>Bisel dije o argolla</li>
+              <li>Alambre</li>
+              <li>Lija y lima</li>
+              <li>Canasta simple</li>
+              <li>Soldadura</li>
+              <li>Texturas</li>
+              <li>Pulido</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modulo-meta">
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Plata incluida</span>
+            <span class="modulo-meta-val">15 gr</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Duración</span>
+            <span class="modulo-meta-val">13 semanas</span>
+          </div>
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Prerequisito</span>
+            <span class="modulo-meta-val">Módulo 1</span>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- LICENCIA MENSUAL -->
+      <div class="modulo-card licencia wide">
+        <img class="modulo-img" style="height:180px;"
+          src="imgs/lm2.jpeg"
+          alt="Licencia mensual — taller libre" loading="lazy" />
+        <div class="modulo-body" style="flex-direction:row; align-items:flex-start; gap:3rem; flex-wrap:wrap;">
+          <div style="flex:1; min-width:250px;">
+            <div class="modulo-num-row">
+              <span class="modulo-num">Licencia Mensual</span>
+              <span class="modulo-clases">9 sesiones / mes</span>
+            </div>
+            <div class="modulo-title">Taller Libre</div>
+            <p class="modulo-obj">Para quien ya domina las bases — usa el espacio, las herramientas y la energía del taller a tu ritmo. Temario libre. Acceso a máquinas y banco de trabajo.</p>
+            <button class="modulo-temario-toggle" onclick="toggleTemario(this)" style="margin-bottom:0.5rem;">
+              <span class="toggle-arrow">›</span> Condiciones de acceso
+            </button>
+            <div class="modulo-temario">
+              <ul>
+                <li>Demostración de conocimientos básicos</li>
+                <li>O acreditación del examen (anillo de bisel)</li>
+                <li>Vaciados, impresiones y grabados se cobran aparte</li>
+                <li>Gas y encendedor extra se cobra aparte</li>
+                <li>Seguetas extra se cobran aparte</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modulo-meta">
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Sesiones</span>
+            <span class="modulo-meta-val">9 al mes</span>
+          </div>
+          
+          <div class="modulo-meta-item">
+            <span class="modulo-meta-label">Prerequisito</span>
+            <span class="modulo-meta-val">Experiencia / Conocimientos previos </span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /modulos-grid -->
+  </section>
+
+  <!-- ════════════════════════════
+       PLAN SILVER — PRECIOS
+  ════════════════════════════ -->
+  <section class="precios-section" id="precios">
+    <div class="precios-header reveal">
+      <div class="section-label">Inversión</div>
+      <h2>Precios<em> Oria</em></h2>
+      <p>Todos los módulos y la licencia mensual incluyen materiales y herramientas. Las clases son bajo agenda y tienes derecho a recuperar clases dentro del tiempo del módulo.</p>
+    </div>
+
+    <div class="precios-table reveal" style="transition-delay:0.15s;">
+      <div class="precio-row header-row">
+        <div class="precio-cell nombre">Curso / Módulo</div>
+        <div class="precio-cell">Duración</div>
+        <div class="precio-cell">Precio</div>
+      </div>
+      <div class="precio-row inscripcion">
+        <div class="precio-cell nombre" data-label="Curso">Inscripción</div>
+        <div class="precio-row-details">
+          <div class="precio-cell" data-label="Duración">1 clase de introducción</div>
+          <div class="precio-cell" data-label="Precio"><div class="precio-num-cell">$600<div class="precio-sub">único pago</div></div></div>
+        </div>
+      </div>
+      <div class="precio-row">
+        <div class="precio-cell nombre" data-label="Curso">General · Mód. 2 + 3 + 4</div>
+        <div class="precio-row-details">
+          <div class="precio-cell" data-label="Duración">23 clases (1 por semana)</div>
+          <div class="precio-cell" data-label="Precio"><div class="precio-num-cell">$2,900<div class="precio-sub">/ mes</div></div></div>
+        </div>
+      </div>
+      <div class="precio-row">
+        <div class="precio-cell nombre" data-label="Curso">Montado Avanzado · Mód. 5</div>
+        <div class="precio-row-details">
+          <div class="precio-cell" data-label="Duración">8 clases (1 por semana)</div>
+          <div class="precio-cell" data-label="Precio"><div class="precio-num-cell">$3,100<div class="precio-sub">/ mes</div></div></div>
+        </div>
+      </div>
+      <div class="precio-row intensivo-row">
+        <div class="precio-cell nombre intensivo-nombre" data-label="Curso">General Intensivo · Mód. 6</div>
+        <div class="precio-row-details">
+          <div class="precio-cell" data-label="Duración">12 clases (3 semanas)</div>
+          <div class="precio-cell" data-label="Precio"><div class="precio-num-cell intensivo-precio">$9,700<div class="precio-sub">único pago</div></div></div>
+        </div>
+      </div>
+      <div class="precio-row">
+        <div class="precio-cell nombre" data-label="Curso">Licencia Mensual</div>
+        <div class="precio-row-details">
+          <div class="precio-cell" data-label="Duración">9 sesiones / mes</div>
+          <div class="precio-cell" data-label="Precio"><div class="precio-num-cell">$4,000<div class="precio-sub">/ mes</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="precios-footer reveal" style="transition-delay:0.2s;">
+      <div class="precios-footer-title">Términos y condiciones generales</div>
+      <div class="precios-footer-list">
+        <div class="precios-footer-item">Todos los módulos y licencia mensual tienen opción de pago de horas extras, sujeto a disponibilidad.</div>
+        <div class="precios-footer-item">Todas las clases son bajo agenda. Los alumnos tienen derecho a recuperar clases dentro del tiempo establecido, con aviso previo.</div>
+        <div class="precios-footer-item">Los materiales indicados en cada módulo serán proporcionados por Oria Atelier. Cualquier material extra tendrá un costo adicional.</div>
+        <div class="precios-footer-item">La inscripción a cada módulo está condicionada a la acreditación del módulo previo.</div>
+      </div>
+    </div>
+
+    <div class="precios-cta reveal" style="transition-delay:0.25s;">
+      <p style="font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--moss-pale);margin-bottom:1.8rem;">¿Listo para empezar?</p>
+      <div class="precios-cta-btns" style="display:flex;gap:1rem;row-gap:1.2rem;justify-content:center;align-items:stretch;flex-wrap:wrap;max-width:560px;margin:0 auto;">
+        <a class="btn-moss btn-wha" href="https://wa.me/4423307074" target="_blank" style="flex:1;min-width:200px;display:flex;align-items:center;justify-content:center;gap:0.6rem;padding:1.1rem 2rem;font-size:0.72rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.117 1.528 5.845L0 24l6.335-1.509A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.875 9.875 0 01-5.031-1.378l-.36-.214-3.732.889.936-3.617-.235-.372A9.875 9.875 0 012.118 12C2.118 6.533 6.533 2.118 12 2.118c5.468 0 9.882 4.415 9.882 9.882 0 5.468-4.414 9.882-9.882 9.882z"/></svg>
+          Inscribirme por WhatsApp
+        </a>
+        <a class="btn-ghost" href="mailto:oriaatelier.co@gmail.com" style="flex:1;min-width:200px;display:flex;align-items:center;justify-content:center;gap:0.6rem;padding:1.1rem 2rem;font-size:0.72rem;color:var(--cream);border-color:rgba(244,240,230,0.3);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          oriaatelier.co@gmail.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER MINI -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      ORIA atelier
+      <small>El Pinar, Jurica · Querétaro</small>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/oria.atelier.mx" target="_blank">@oria.atelier.mx</a>
+    </div>
+    <div class="footer-copy">© 2026 — Tu historia en cada pieza.</div>
+  </footer>
+
+  <!-- ════════════════════
+       JAVASCRIPT
+  ════════════════════ -->
+  <script>
+    // ── Menú hamburguesa ──
+    function toggleMenu() {
+      const btn = document.getElementById('hamburger');
+      const menu = document.getElementById('mobileMenu');
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    }
+
+    // ── Datos de experiencias ──
+    const experiencias = [
+      {
+        tag: ' Workshop de Cera',
+        eyebrow: 'Experiencia entre amigos · Bajo Agenda',
+        title: 'Workshop<br /><em>de Cera</em>',
+        subtitle: 'Crea el regalo más especial: una joya hecha por ti',
+        desc: 'Un momento creativo y único para vivir con esa persona especial. Esculpirán juntos un dije o un anillo en plata en una sesión de 4 horas. Se incluyen 8gr de plata, snacks y fotografías del proceso.',
+        chips: ['1 sesión de 4 hrs',' Individual o en pareja',' Materiales incluidos','✦ Plata .950'],
+        price: '$1,990',
+        priceLabel: 'MXN por persona<br/> $3,850 por pareja',
+        img: 'imgs/w2.jpg',
+        deco: '01'
+      },
+      {
+        tag: ' Argollas de novios',
+        eyebrow: 'Experiencia especial · Bajo Agenda',
+        title: 'Taller<br /><em>de Novios</em>',
+        subtitle: 'Forjen juntos su joya más importante',
+        desc: 'Una experiencia íntima para parejas: diseñen y elaboren sus propias argollas de pareja en plata .950 u oro 18k. El taller más romántico del año —  un recuerdo hecho con sus propias manos para toda la vida.',
+        chips: [' 1 sesión de 5 hrs',' Para parejas',' Copa de bienvenida',' Plata .950'],
+        price: 'Precio a consultar',
+        priceLabel: 'según materiales y dinámica',
+        img: 'imgs/argollas.jpeg',
+        deco: '02'
+      },
+      {
+        tag: ' Colaboraciones',
+        eyebrow: 'Calendario 2026 — propuestas',
+        title: '<em>¿Tienes una</em><br />idea especial?',
+        subtitle: 'Diseñamos experiencias a medida',
+        desc: 'Cumpleaños, despedidas de soltera, teambuilding, clases privadas... Cuéntanos qué tienes en mente y diseñamos una experiencia de joyería completamente a tu medida para el grupo o la ocasión que imagines.',
+        chips: [' Cumpleaños',' Despedida de soltera',' Teambuilding',' Clases privadas','Agenda a convenir'],
+        price: 'Precio a consultar',
+        priceLabel: 'según grupo y dinámica',
+        img: 'imgs/colab.jpeg',
+        deco: '03'
+      }
+    ];
+
+    function setExp(idx) {
+      const e = experiencias[idx];
+      // texto
+      document.getElementById('exp-tag').textContent = e.tag;
+      document.getElementById('exp-eyebrow').textContent = e.eyebrow.replace(' · ', ' · ');
+      document.getElementById('exp-title').innerHTML = e.title;
+      document.getElementById('exp-subtitle').textContent = e.subtitle;
+      document.getElementById('exp-desc').textContent = e.desc;
+      document.getElementById('exp-price').textContent = e.price;
+      document.querySelector('.exp-precio-label').innerHTML = e.priceLabel;
+      document.getElementById('exp-deco').textContent = e.deco;
+      const chips = document.getElementById('exp-chips');
+      chips.innerHTML = e.chips.map(c => `<div class="exp-chip"><span class="exp-chip-icon"></span>${c}</div>`).join('');
+      // imagen con fade
+      const img = document.getElementById('exp-main-img');
+      img.style.opacity = '0';
+      img.style.transition = 'opacity 0.4s';
+      setTimeout(() => {
+        img.src = e.img;
+        img.onload = () => { img.style.opacity = '1'; };
+      }, 200);
+      // tabs & dots — sincroniza ambos conjuntos (desktop y mobile)
+      document.querySelectorAll('.exp-tab').forEach((t,i) => t.classList.toggle('active', i % 3 === idx));
+      document.querySelectorAll('.exp-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+    }
+
+    // ── Temario expandible ──
+    function toggleTemario(btn) {
+      const temario = btn.nextElementSibling;
+      const isOpen = temario.classList.contains('open');
+      temario.classList.toggle('open', !isOpen);
+      btn.classList.toggle('open', !isOpen);
+      btn.childNodes[2].textContent = isOpen ? ' Ver temario' : ' Ocultar temario';
+    }
+
+    // ── Reveal on scroll ──
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
